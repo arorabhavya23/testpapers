@@ -1,12 +1,28 @@
-nnode {
-    stages('checkout') {
-        checkout([$class: 'GitSCM', branches: [[name: '*']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/arorabhavya23/testpapers']]])
-    }
-    stages('build'){
-        echo 'buid is running'
-    }
-    stages('junit'){
-            echo 'buid is running'
+pipeline {
+    agent any
+
+    stages {
+        stage('Gradle build') {
+                buildInfo = rtGradle.run rootDir: "src/main/java/com/itelliexams/tests/", buildFile: 'build.gradle', tasks: 'gradle bootrun'
+            }
         }
- }
+
+        stage ('Testing Stage') {
+
+            steps {
+                withMaven(maven : 'maven_3_5_0') {
+                    sh 'mvn test'
+                }
+            }
+        }
+
+
+        stage ('Deployment Stage') {
+            steps {
+                withMaven(maven : 'maven_3_5_0') {
+                    sh 'mvn deploy'
+                }
+            }
+        }
+    }
 }
