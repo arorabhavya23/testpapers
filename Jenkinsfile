@@ -4,15 +4,15 @@ node {
 
     stage("Compilation and Analysis") {
         parallel 'Compilation': {
-            bat "./gradlew  bootrun --info"
+            bat "./gradlew  build --info"
         }
     }
 
-    stage("Tests and Deployment") {
+    stage("Junit Tests and Deployment") {
         parallel 'Unit tests': {
             stage("Runing unit tests") {
                 try {
-                    bat "./gradlew test -Punit"
+                    bat "./gradlew test --info"
                 } catch(err) {
                     step([$class: 'JUnitResultArchiver', testResults:
                       '**/target/surefire-reports/TEST-*UnitTest.xml'])
@@ -22,9 +22,9 @@ node {
                  '**/target/surefire-reports/TEST-*UnitTest.xml'])
             }
         }, 'Integration tests': {
-            stage("Runing integration tests") {
+            stage("Runing clean build") {
                 try {
-                    bat "./gradlew test -Pintegration"
+                    bat "./gradlew clean build --info"
                 } catch(err) {
                     step([$class: 'JUnitResultArchiver', testResults:
                       '**/target/surefire-reports/TEST-'
