@@ -28,7 +28,7 @@ node {
                 }
                 step([$class: 'JUnitResultArchiver', testResults:
                   '**/build/test-results/test/TEST-com.itellieams.tests.'
-                    + '*TestpapersApplicationTests.xml'])
+                    + 'TestpapersApplicationTests.xml'])
             }
         }
     }
