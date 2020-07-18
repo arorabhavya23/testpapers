@@ -27,8 +27,8 @@ node {
                     throw err
                 }
                 step([$class: 'JUnitResultArchiver', testResults:
-                  '**/target/surefire-reports/TEST-'
-                    + '*IntegrationTest.xml'])
+                  '**/build/test-results/test/TEST-com.itellieams.tests.'
+                    + '*TestpapersApplicationTests.xml'])
             }
         }
     }
