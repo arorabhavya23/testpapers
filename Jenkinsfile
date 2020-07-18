@@ -18,17 +18,7 @@ node {
     stage("clean build stage") {
             parallel 'Integration tests': {
             stage("Runing clean build") {
-                try {
-                    bat "./gradlew clean build --info"
-                } catch(err) {
-                    step([$class: 'JUnitResultArchiver', testResults:
-                        '**/build/test-results/test/TEST-com.itellieams.tests.'
-                        + 'TestpapersApplicationTests.xml'])
-                    throw err
-                }
-                step([$class: 'JUnitResultArchiver', testResults:
-                  '**/build/test-results/test/TEST-com.itellieams.tests.'
-                    + 'TestpapersApplicationTests.xml'])
+                bat "./gradlew clean build --info"
             }
         }
     }
