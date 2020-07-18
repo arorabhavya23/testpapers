@@ -1,4 +1,4 @@
-node {
+nnode {
     stages('checkout') {
         checkout([$class: 'GitSCM', branches: [[name: '*']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/arorabhavya23/testpapers']]])
     }
