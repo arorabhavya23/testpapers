@@ -8,27 +8,22 @@ node {
         }
     }
 
-    stage("Junit Tests and Deployment") {
+    stage("Junit Tests") {
         parallel 'Unit tests': {
             stage("Runing unit tests") {
-                try {
-                    bat "./gradlew test --info"
-                } catch(err) {
-                    step([$class: 'JUnitResultArchiver', testResults:
-                      '**/target/surefire-reports/TEST-*UnitTest.xml'])
-                    throw err
-                }
-               step([$class: 'JUnitResultArchiver', testResults:
-                 '**/target/surefire-reports/TEST-*UnitTest.xml'])
+                bat "./gradlew test --info"
             }
-        }, 'Integration tests': {
+        }
+    }
+    stage("clean build stage") {
+            parallel 'Integration tests': {
             stage("Runing clean build") {
                 try {
                     bat "./gradlew clean build --info"
                 } catch(err) {
                     step([$class: 'JUnitResultArchiver', testResults:
-                      '**/target/surefire-reports/TEST-'
-                        + '*IntegrationTest.xml'])
+                        '**/build/test-results/test/TEST-com.itellieams.tests.'
+                        + 'TestpapersApplicationTests.xml'])
                     throw err
                 }
                 step([$class: 'JUnitResultArchiver', testResults:
