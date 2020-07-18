@@ -3,7 +3,8 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'gradle bootrun'
+                git branch: 'develop', url: 'https://github.com/arorabhavya23/testpapers'
+                build job: 'intelliexams', quietPeriod: 8, wait: false
             }
         }
     }
