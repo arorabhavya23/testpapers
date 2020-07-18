@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Gradle build') {
             withGradle {
-                buildInfo = rtGradle.run rootDir: "src/main/java/com/itelliexams/tests/", buildFile: 'build.gradle', bat label: '', script: 'gradlew clean build'
+                buildInfo = rtGradle.run rootDir: "src/main/java/com/itelliexams/tests/", buildFile: 'build.gradle'
             }
         }
 
