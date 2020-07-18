@@ -2,23 +2,21 @@ pipeline {
     agent any
     stages {
         stage('Gradle build') {
-            buildInfo = rtGradle.run rootDir: "src/main/java/com/itelliexams/tests/", buildFile: 'build.gradle', bat label: '', script: 'gradlew clean build'
-        }
-    }
-
-    stage ('Testing Stage') {
-        steps {
-            withMaven(maven : 'maven_3_5_0') {
-                sh 'mvn test'
+            withGradle {
+                buildInfo = rtGradle.run rootDir: "src/main/java/com/itelliexams/tests/", buildFile: 'build.gradle', bat label: '', script: 'gradlew clean build'
             }
         }
-    }
 
-    stage ('Deployment Stage') {
-        steps {
-        withMaven(maven : 'maven_3_5_0') {
-                sh 'mvn deploy'
+        stage ('Testing Stage') {
+            steps {
+                withGradle {
+                    bat label: '', script: 'gradlew build'
+                }
             }
+        }
+
+        stage ('Deployment Stage') {
+            bat label: '', script: 'gradlew clean'
         }
     }
 }
