@@ -1,11 +1,12 @@
-pipeline {
-    agent { docker { image 'gradle project' } }
-    stages {
-        stage('build') {
-            steps {
-                git branch: 'develop', url: 'https://github.com/arorabhavya23/testpapers'
-                build job: 'intelliexams', quietPeriod: 8, wait: false
-            }
-        }
+node {
+    stages('checkout') {
+        checkout([$class: 'GitSCM', branches: [[name: '*']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/arorabhavya23/testpapers']]])
     }
+    stages('build'){
+        echo 'buid is running'
+    }
+    stages('junit'){
+            echo 'buid is running'
+        }
+ }
 }
