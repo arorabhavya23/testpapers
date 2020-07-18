@@ -1,0 +1,10 @@
+pipeline {
+    agent { docker { image 'gradle project' } }
+    stages {
+        stage('build') {
+            steps {
+                sh 'gradle bootrun'
+            }
+        }
+    }
+}
